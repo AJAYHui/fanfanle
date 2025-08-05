@@ -23,6 +23,52 @@
       animation: moveGradient 15s ease-in-out infinite;
     }
     @keyframes moveGradient { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+    
+    /* --- 新增：主布局容器 --- */
+    .page-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 30px;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+    .main-content {
+      flex: 1;
+      max-width: 800px; /* 限制游戏区域最大宽度 */
+    }
+    /* --- 新增：侧边栏图鉴样式 --- */
+    .sidebar {
+      width: 320px;
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 15px;
+      padding: 20px;
+      box-sizing: border-box;
+      text-align: left;
+      height: 85vh; /* 设置一个高度 */
+      overflow-y: auto; /* 内容超出时可滚动 */
+      position: sticky; /* 页面滚动时侧边栏固定 */
+      top: 20px;
+    }
+    .sidebar h3 {
+        margin-top: 0;
+        text-align: center;
+    }
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+      color: #fff;
+    }
+    .sidebar li {
+      padding: 5px 0;
+      font-size: 0.9rem;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+    }
+    .sidebar strong {
+      margin-right: 8px;
+    }
+
     .game-title { font-size: 2.5rem; color: #fff; text-shadow: 0 2px 5px rgba(0, 0, 0, 0.25); letter-spacing: 3px; margin-bottom: 15px; }
     .mode-selector { margin-bottom: 15px; display: flex; justify-content: center; gap: 10px; }
     .mode-btn { background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.4); backdrop-filter: blur(5px); color: #fff; padding: 8px 20px; border-radius: 50px; cursor: pointer; transition: all 0.3s; }
@@ -53,138 +99,113 @@
     .results-container.active { opacity: 1; transform: translateY(0); max-height: 500px; margin-top: 20px; }
     .results-content { background: rgba(255, 255, 255, 0.25); border: 1px solid rgba(255, 255, 255, 0.4); backdrop-filter: blur(10px); border-radius: 15px; padding: 30px; width: 100%; max-width: 500px; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); margin: 0 auto; }
     h2, h3 { color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.2); }
-    #records-container { margin: 40px auto 0; max-width: 600px; }
+    #records-container { margin: 40px auto 0; max-width: 800px; }
     #records-list { list-style: none; padding: 0; }
     #records-list li { background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 8px; padding: 15px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
     .record-actions { display: flex; gap: 10px; }
     .icon-btn { background: rgba(255, 255, 255, 0.3); color: #fff; border: none; width: 35px; height: 35px; border-radius: 50%; font-size: 1rem; cursor: pointer; transition: all 0.3s; display: inline-flex; justify-content: center; align-items: center;}
     .icon-btn:hover { background: #fff; color: #5D3587; }
-    
-    /* --- 新增：物品图鉴弹出窗口样式 --- */
-    .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(5px);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease;
-      z-index: 1000;
-    }
-    .modal-overlay.active {
-      opacity: 1;
-      pointer-events: all;
-    }
-    .modal-content {
-      background: rgba(255, 255, 255, 0.25);
-      border: 1px solid rgba(255, 255, 255, 0.4);
-      border-radius: 15px;
-      padding: 30px;
-      width: 90%;
-      max-width: 800px;
-      max-height: 80vh;
-      overflow-y: auto;
-      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-      position: relative;
-      transform: scale(0.95);
-      transition: transform 0.3s ease;
-    }
-    .modal-overlay.active .modal-content {
-      transform: scale(1);
-    }
-    .close-btn {
-      position: absolute;
-      top: 15px;
-      right: 15px;
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      color: #fff;
-      cursor: pointer;
-    }
-    .lists-wrapper {
-      display: flex;
-      gap: 30px;
-    }
-    .list-container {
-      flex: 1;
-      text-align: left;
-    }
-    .list-container ul {
-      list-style: none;
-      padding: 0;
-      color: #fff;
-    }
-    .list-container li {
-      padding: 5px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.2);
-    }
-    .list-container strong {
-      margin-right: 8px;
-    }
-    /* --- 响应式设计 --- */
-    @media (max-width: 768px) {
-      .lists-wrapper {
-        flex-direction: column;
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(5px); display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; z-index: 1000; }
+    .modal-overlay.active { opacity: 1; pointer-events: all; }
+    .modal-content { background: rgba(255, 255, 255, 0.25); border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 15px; padding: 30px; width: 90%; max-width: 800px; max-height: 80vh; overflow-y: auto; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); position: relative; transform: scale(0.95); transition: transform 0.3s ease; }
+    .modal-overlay.active .modal-content { transform: scale(1); }
+    .close-btn { position: absolute; top: 15px; right: 15px; background: none; border: none; font-size: 1.5rem; color: #fff; cursor: pointer; }
+    .lists-wrapper { display: flex; gap: 30px; }
+    .list-container { flex: 1; text-align: left; }
+    .list-container ul { list-style: none; padding: 0; color: #fff; }
+    .list-container li { padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.2); }
+    .list-container strong { margin-right: 8px; }
+
+    /* --- 关键的响应式布局切换 --- */
+    @media (max-width: 1200px) {
+      .page-wrapper {
+        flex-direction: column; /* 窄屏时垂直堆叠 */
+      }
+      .sidebar {
+        display: none; /* 隐藏静态侧边栏 */
+      }
+      #show-items-btn {
+        display: inline-block; /* 显示“物品图鉴”按钮 */
       }
     }
+    @media (min-width: 1201px) {
+      .sidebar {
+        display: block; /* 宽屏时显示静态侧边栏 */
+      }
+      #show-items-btn {
+        display: none; /* 隐藏“物品图鉴”按钮 */
+      }
+      .lists-wrapper {
+        flex-direction: column; /* 侧边栏内部也垂直排列，节省宽度 */
+      }
+    }
+    @media (max-width: 768px) { .lists-wrapper { flex-direction: column; } }
     @media (max-width: 600px) { body { padding: 10px; } .game-title { font-size: 2rem; } .stats-container { gap: 10px; } .stat-box { min-width: 120px; padding: 8px 15px; font-size: 1rem; } .game-container { grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 10px 0; } #records-list li { flex-direction: column; gap: 10px; } .card-back { font-size: 2.5rem; } }
   </style>
 </head>
 <body>
-  <h1 class="game-title">三角洲-惊喜翻翻乐</h1>
-  
-  <div class="mode-selector">
-    <button class="mode-btn" id="set-low-value-btn">基础版</button>
-    <button class="mode-btn" id="set-high-value-btn">进阶版</button>
-  </div>
-
-  <div class="main-controls">
-    <button class="main-btn" id="new-game-btn">开启新局</button>
-    <button class="main-btn" id="pause-btn">暂停游戏</button>
-    <!-- 新增图鉴按钮 -->
-    <button class="main-btn" id="show-items-btn">物品图鉴</button>
-  </div>
-  
-  <div class="io-controls">
-    <button class="main-btn" id="export-btn">保存游戏</button>
-    <label for="import-input" class="main-btn">加载对局</label>
-    <input type="file" id="import-input" accept=".json,text/plain">
-  </div>
-
-  <div class="stats-container">
-    <div class="stat-box"><div>翻牌次数</div><div id="moves-count">0</div></div>
-    <div class="stat-box"><div>配对成功</div><div id="matches-count">0</div></div>
-    <div class="stat-box"><div>前6次内配对</div><div id="early-matches-count">0</div></div>
-  </div>
-  
-  <div class="game-container" id="game-board"></div>
-
-  <div class="results-container" id="results-container">
-    <div class="results-content">
-      <h2>游戏结束</h2>
-      <p>总翻牌次数 <span id="final-moves">0</span></p>
-      <p>配对成功 <span id="final-matches">0</span></p>
-      <button class="main-btn" id="restart-btn">返回主菜单</button>
+  <!-- 新增主布局容器 -->
+  <div class="page-wrapper">
+    <!-- 主游戏内容区 -->
+    <div class="main-content">
+      <h1 class="game-title">三角洲-惊喜翻翻乐</h1>
+      <div class="mode-selector">
+        <button class="mode-btn" id="set-low-value-btn">基础版</button>
+        <button class="mode-btn" id="set-high-value-btn">进阶版</button>
+      </div>
+      <div class="main-controls">
+        <button class="main-btn" id="new-game-btn">开启新局</button>
+        <button class="main-btn" id="pause-btn">暂停游戏</button>
+        <button class="main-btn" id="show-items-btn">物品图鉴</button>
+      </div>
+      <div class="io-controls">
+        <button class="main-btn" id="export-btn">保存游戏</button>
+        <label for="import-input" class="main-btn">加载对局</label>
+        <input type="file" id="import-input" accept=".json,text/plain">
+      </div>
+      <div class="stats-container">
+        <div class="stat-box"><div>翻牌次数</div><div id="moves-count">0</div></div>
+        <div class="stat-box"><div>配对成功</div><div id="matches-count">0</div></div>
+        <div class="stat-box"><div>前6次内配对</div><div id="early-matches-count">0</div></div>
+      </div>
+      <div class="game-container" id="game-board"></div>
+      <div class="results-container" id="results-container">
+        <div class="results-content">
+          <h2>游戏结束</h2>
+          <p>总翻牌次数 <span id="final-moves">0</span></p>
+          <p>配对成功 <span id="final-matches">0</span></p>
+          <button class="main-btn" id="restart-btn">返回主菜单</button>
+        </div>
+      </div>
+      <div id="records-container">
+        <h2>暂停记录</h2>
+        <ul id="records-list"></ul>
+      </div>
     </div>
-  </div>
 
-  <div id="records-container">
-    <h2>暂停记录</h2>
-    <ul id="records-list"></ul>
+    <!-- 新增：桌面端静态侧边栏图鉴 -->
+    <aside class="sidebar">
+      <h3>物品价值图鉴</h3>
+      <div class="list-container">
+          <h4>基础版物品</h4>
+          <ul>
+            <li><strong>摄影机:</strong> 60w</li><li><strong>显卡:</strong> 35w</li><li><strong>无人机:</strong> 55w</li><li><strong>军用控制终端:</strong> 40w</li><li><strong>实验数据:</strong> 25w</li><li><strong>量子存储:</strong> 30w</li><li><strong>滑膛枪:</strong> 85w</li><li><strong>金条:</strong> 35w</li><li><strong>笔记本电脑:</strong> 145w</li><li><strong>自动体外除颤器:</strong> 150w</li><li><strong>高速磁盘阵列:</strong> 150w</li><li><strong>步战车模型:</strong> 130w</li><li><strong>化石:</strong> 35w</li><li><strong>人头像:</strong> 130w</li><li><strong>香槟:</strong> 35w</li><li><strong>留声机:</strong> 130w</li><li><strong>天圆地方:</strong> 55w</li><li><strong>医疗机器人:</strong> 130w</li><li><strong>监狱图纸:</strong> 30w</li><li><strong>锅子:</strong> 50w</li><li><strong>航天油:</strong> 150w</li><li><strong>动力电池组:</strong> 160w</li><li><strong>监狱油:</strong> 150w</li><li><strong>军用信息终端:</strong> 90w</li><li><strong>瞪羚:</strong> 45w</li><li><strong>军用电台:</strong> 100w</li><li><strong>刀片服务器:</strong> 140w</li><li><strong>黑匣子:</strong> 145w</li><li><strong>军用炮弹:</strong> 150w</li><li><strong>强力吸尘器:</strong> 140w</li><li><strong>绝密服务器:</strong> 180w</li><li><strong>呼吸机:</strong> 45w</li>
+          </ul>
+        </div>
+        <div class="list-container">
+          <h4>进阶版物品</h4>
+          <ul>
+            <li><strong>海洋之泪:</strong> 2200w</li><li><strong>复苏呼吸机:</strong> 1000w</li><li><strong>微型反应炉:</strong> 320w</li><li><strong>万金皇冠:</strong> 360w</li><li><strong>纵横:</strong> 340w</li><li><strong>装甲车电池:</strong> 270w</li><li><strong>坦克:</strong> 210w</li><li><strong>非洲之心:</strong> 1400w</li><li><strong>ecmo:</strong> 200w</li><li><strong>云存储阵列:</strong> 220w</li><li><strong>曼德尔超算单元:</strong> 200w</li><li><strong>便携军用雷达:</strong> 220w</li><li><strong>碳纤维板:</strong> 220w</li><li><strong>扫拖一体机器人:</strong> 200w</li>
+          </ul>
+        </div>
+    </aside>
   </div>
   
   <audio id="sound-flip" src="sounds/flip.mp3" preload="auto"></audio>
   <audio id="sound-match" src="sounds/match.mp3" preload="auto"></audio>
   <audio id="sound-click" src="sounds/click.mp3" preload="auto"></audio>
 
-  <!-- 新增：物品图鉴弹出窗口HTML -->
+  <!-- 移动端弹出窗口 (HTML结构保持不变，仅在窄屏时通过JS调用) -->
   <div class="modal-overlay" id="item-list-modal">
     <div class="modal-content">
       <button class="close-btn" id="close-items-btn">×</button>
@@ -193,57 +214,13 @@
         <div class="list-container">
           <h3>基础版物品</h3>
           <ul>
-            <li><strong>摄影机:</strong> 60w</li>
-            <li><strong>显卡:</strong> 35w</li>
-            <li><strong>无人机:</strong> 55w</li>
-            <li><strong>军用控制终端:</strong> 40w</li>
-            <li><strong>实验数据:</strong> 25w</li>
-            <li><strong>量子存储:</strong> 30w</li>
-            <li><strong>滑膛枪:</strong> 85w</li>
-            <li><strong>金条:</strong> 35w</li>
-            <li><strong>笔记本电脑:</strong> 145w</li>
-            <li><strong>自动体外除颤器:</strong> 150w</li>
-            <li><strong>高速磁盘阵列:</strong> 150w</li>
-            <li><strong>步战车模型:</strong> 130w</li>
-            <li><strong>化石:</strong> 35w</li>
-            <li><strong>人头像:</strong> 130w</li>
-            <li><strong>香槟:</strong> 35w</li>
-            <li><strong>留声机:</strong> 130w</li>
-            <li><strong>天圆地方:</strong> 55w</li>
-            <li><strong>医疗机器人:</strong> 130w</li>
-            <li><strong>监狱图纸:</strong> 30w</li>
-            <li><strong>锅子:</strong> 50w</li>
-            <li><strong>航天油:</strong> 150w</li>
-            <li><strong>动力电池组:</strong> 160w</li>
-            <li><strong>监狱油:</strong> 150w</li>
-            <li><strong>军用信息终端:</strong> 90w</li>
-            <li><strong>瞪羚:</strong> 45w</li>
-            <li><strong>军用电台:</strong> 100w</li>
-            <li><strong>刀片服务器:</strong> 140w</li>
-            <li><strong>黑匣子:</strong> 145w</li>
-            <li><strong>军用炮弹:</strong> 150w</li>
-            <li><strong>强力吸尘器:</strong> 140w</li>
-            <li><strong>绝密服务器:</strong> 180w</li>
-            <li><strong>呼吸机:</strong> 45w</li>
+            <li><strong>摄影机:</strong> 60w</li><li><strong>显卡:</strong> 35w</li><li><strong>无人机:</strong> 55w</li><li><strong>军用控制终端:</strong> 40w</li><li><strong>实验数据:</strong> 25w</li><li><strong>量子存储:</strong> 30w</li><li><strong>滑膛枪:</strong> 85w</li><li><strong>金条:</strong> 35w</li><li><strong>笔记本电脑:</strong> 145w</li><li><strong>自动体外除颤器:</strong> 150w</li><li><strong>高速磁盘阵列:</strong> 150w</li><li><strong>步战车模型:</strong> 130w</li><li><strong>化石:</strong> 35w</li><li><strong>人头像:</strong> 130w</li><li><strong>香槟:</strong> 35w</li><li><strong>留声机:</strong> 130w</li><li><strong>天圆地方:</strong> 55w</li><li><strong>医疗机器人:</strong> 130w</li><li><strong>监狱图纸:</strong> 30w</li><li><strong>锅子:</strong> 50w</li><li><strong>航天油:</strong> 150w</li><li><strong>动力电池组:</strong> 160w</li><li><strong>监狱油:</strong> 150w</li><li><strong>军用信息终端:</strong> 90w</li><li><strong>瞪羚:</strong> 45w</li><li><strong>军用电台:</strong> 100w</li><li><strong>刀片服务器:</strong> 140w</li><li><strong>黑匣子:</strong> 145w</li><li><strong>军用炮弹:</strong> 150w</li><li><strong>强力吸尘器:</strong> 140w</li><li><strong>绝密服务器:</strong> 180w</li><li><strong>呼吸机:</strong> 45w</li>
           </ul>
         </div>
         <div class="list-container">
           <h3>进阶版物品</h3>
           <ul>
-            <li><strong>海洋之泪:</strong> 2200w</li>
-            <li><strong>复苏呼吸机:</strong> 1000w</li>
-            <li><strong>微型反应炉:</strong> 320w</li>
-            <li><strong>万金皇冠:</strong> 360w</li>
-            <li><strong>纵横:</strong> 340w</li>
-            <li><strong>装甲车电池:</strong> 270w</li>
-            <li><strong>坦克:</strong> 210w</li>
-            <li><strong>非洲之心:</strong> 1400w</li>
-            <li><strong>ecmo:</strong> 200w</li>
-            <li><strong>云存储阵列:</strong> 220w</li>
-            <li><strong>曼德尔超算单元:</strong> 200w</li>
-            <li><strong>便携军用雷达:</strong> 220w</li>
-            <li><strong>碳纤维板:</strong> 220w</li>
-            <li><strong>扫拖一体机器人:</strong> 200w</li>
+            <li><strong>海洋之泪:</strong> 2200w</li><li><strong>复苏呼吸机:</strong> 1000w</li><li><strong>微型反应炉:</strong> 320w</li><li><strong>万金皇冠:</strong> 360w</li><li><strong>纵横:</strong> 340w</li><li><strong>装甲车电池:</strong> 270w</li><li><strong>坦克:</strong> 210w</li><li><strong>非洲之心:</strong> 1400w</li><li><strong>ecmo:</strong> 200w</li><li><strong>云存储阵列:</strong> 220w</li><li><strong>曼德尔超算单元:</strong> 200w</li><li><strong>便携军用雷达:</strong> 220w</li><li><strong>碳纤维板:</strong> 220w</li><li><strong>扫拖一体机器人:</strong> 200w</li>
           </ul>
         </div>
       </div>
@@ -251,17 +228,15 @@
   </div>
 
 <script>
-  // JavaScript部分，仅增加图鉴窗口的控制逻辑
+  // JavaScript 部分完全不用修改，之前的逻辑可以完美支持这个新布局
   const imagePaths = { low: '三角洲低价值红色物品图片/', high: '三角洲高价值红色物品图片/' };
   const imageCounts = { low: 36, high: 14 };
   const cardTypes = ['A', 'A', 'B', 'B', 'C', 'C', 'D', 'E', 'F', 'G'];
   const romanNumerals = { A: 'Ⅰ', B: 'Ⅱ', C: 'Ⅲ', D: 'Ⅳ', E: 'Ⅴ', F: 'Ⅵ', G: 'Ⅶ' };
   const SAVES_LS_KEY = 'deltaGameSaves';
   const MODE_LS_KEY = 'deltaGameValueMode';
-
   let gameState = {};
   let currentValueMode = 'low';
-
   const gameBoard = document.getElementById('game-board');
   const movesCount = document.getElementById('moves-count');
   const matchesCount = document.getElementById('matches-count');
@@ -280,27 +255,12 @@
   const soundFlip = document.getElementById('sound-flip');
   const soundMatch = document.getElementById('sound-match');
   const soundClick = document.getElementById('sound-click');
-  
-  // 新增：获取图鉴窗口相关元素
   const showItemsBtn = document.getElementById('show-items-btn');
   const itemListModal = document.getElementById('item-list-modal');
   const closeItemsBtn = document.getElementById('close-items-btn');
-
-  function playSound(sound) {
-      sound.currentTime = 0;
-      sound.play().catch(e => console.log("音效播放被浏览器阻止:", e));
-  }
-  
-  // 新增：打开和关闭图鉴窗口的函数
-  function openItemsModal() {
-    playSound(soundClick);
-    itemListModal.classList.add('active');
-  }
-  function closeItemsModal() {
-    playSound(soundClick);
-    itemListModal.classList.remove('active');
-  }
-
+  function playSound(sound) { sound.currentTime = 0; sound.play().catch(e => console.log("音效播放被浏览器阻止:", e)); }
+  function openItemsModal() { playSound(soundClick); itemListModal.classList.add('active'); }
+  function closeItemsModal() { playSound(soundClick); itemListModal.classList.remove('active'); }
   function importSaves(event) { const file = event.target.files[0]; if (!file) return; const reader = new FileReader(); reader.onload = function(e) { try { const importedData = JSON.parse(e.target.result); if (!Array.isArray(importedData)) { throw new Error('导入的文件格式不正确。'); } localStorage.setItem(SAVES_LS_KEY, JSON.stringify(importedData)); renderRecords(); alert(`存档已成功恢复！共导入 ${importedData.length} 条记录。`); } catch (error) { alert('加载失败！请确保文件有效。\n错误: ' + error.message); } finally { event.target.value = ''; } }; reader.readAsText(file); }
   function exportSaves() { const saves = localStorage.getItem(SAVES_LS_KEY); if (!saves || saves === '[]') { alert('没有可保存的记录！'); return; } const blob = new Blob([saves], { type: 'application/json' }); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = `delta-game-saves-${Date.now()}.json`; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url); }
   function renderRecords() { recordsList.innerHTML = ''; const saves = JSON.parse(localStorage.getItem(SAVES_LS_KEY) || '[]'); if (saves.length === 0) { recordsList.innerHTML = '<li>暂无记录</li>'; return; } saves.forEach(save => { const li = document.createElement('li'); const saveDate = new Date(save.id).toLocaleString(); const modeText = save.valueMode === 'high' ? '进阶版' : '基础版'; li.innerHTML = `<span>[${modeText}] 暂停于: ${saveDate} (翻牌${save.moves}次)</span><div class="record-actions"><button class="icon-btn" data-action="load" data-id="${save.id}" title="继续游戏"><i class="fa-solid fa-play"></i></button><button class="icon-btn" data-action="delete" data-id="${save.id}" title="删除记录"><i class="fa-solid fa-trash-can"></i></button></div>`; recordsList.appendChild(li); }); }
@@ -313,7 +273,7 @@
   function updateStatsUI() { movesCount.textContent = gameState.moves; matchesCount.textContent = gameState.matchedPairs; earlyMatchesCount.textContent = gameState.earlyMatches; }
   function flipCard(card) { const index = parseInt(card.dataset.index); if (!gameState.inProgress || gameState.flippedCards.has(index) || gameState.gameComplete) return; playSound(soundFlip); card.classList.add('flipped'); gameState.moves++; gameState.flippedCards.add(index); updateStatsUI(); setTimeout(() => { checkMatches(); checkGameComplete(); }, 300); }
   function deleteRecord(saveId) { playSound(soundClick); let saves = JSON.parse(localStorage.getItem(SAVES_LS_KEY) || '[]'); saves = saves.filter(s => s.id !== saveId); localStorage.setItem(SAVES_LS_KEY, JSON.stringify(saves)); renderRecords(); }
-  function checkMatches() { const flippedCardsIndexes = [...gameState.flippedCards].filter(index => !gameState.matchedCards.has(index)); const typeMap = new Map(); flippedCardsIndexes.forEach(index => { const card = gameBoard.querySelector(`[data-index='${index}']`); if (card) { const type = card.dataset.type; if (!typeMap.has(type)) typeMap.set(type, []); typeMap.get(type).push(card); } }); let newMatches = 0; typeMap.forEach((cards, type) => { if (['A', 'B', 'C'].includes(type) && cards.length === 2) { playSound(soundMatch); cards.forEach(card => { card.classList.add('matched'); card.querySelector('.symbol').classList.add('pulse'); }); gameState.matchedCards.add(parseInt(cards[0].dataset.index)); gameState.matchedCards.add(parseInt(cards[1].dataset.index)); newMatches++; } }); if (newMatches > 0) { gameState.matchedPairs += newMatches; if (gameState.moves <= 6) { gameState.earlyMatches += newMatches; } updateStatsUI(); } }
+  function checkMatches() { const flippedCardsIndexes = [...gameState.flippedCards].filter(index => !gameState.matchedCards.has(index)); const typeMap = new Map(); flippedCardsIndexes.forEach(index => { const card = gameBoard.querySelector(`[data-index='${index}']`); if (card) { const type = card.dataset.type; if (!typeMap.has(type)) typeMap.set(type, []); typeMap.get(type).push(card); } }); let newMatches = 0; typeMap.forEach((cards, type) => { if (['A', 'B', 'C'].includes(type) && cards.length === 2) { playSound(soundMatch); cards.forEach(card => { card.classList.add('matched'); const symbol = card.querySelector('.symbol'); if (symbol) symbol.classList.add('pulse'); }); gameState.matchedCards.add(parseInt(cards[0].dataset.index)); gameState.matchedCards.add(parseInt(cards[1].dataset.index)); newMatches++; } }); if (newMatches > 0) { gameState.matchedPairs += newMatches; if (gameState.moves <= 6) { gameState.earlyMatches += newMatches; } updateStatsUI(); } }
   function checkGameComplete() { if (gameState.shuffled.length > 0 && gameState.flippedCards.size === gameState.shuffled.length) { gameState.gameComplete = true; gameState.inProgress = false; finalMoves.textContent = gameState.moves; finalMatches.textContent = gameState.matchedPairs; resultsContainer.classList.add('active'); } }
   function getRandomSample(arr, n) { const result = []; const copied = arr.slice(); for (let i = 0; i < n; i++) { if (copied.length === 0) break; const idx = Math.floor(Math.random() * copied.length); result.push(copied[idx]); copied.splice(idx, 1); } return result; }
   
@@ -325,16 +285,9 @@
   recordsList.addEventListener('click', (e) => { const target = e.target.closest('button'); if (target) { const action = target.dataset.action; const id = parseInt(target.dataset.id); if (action === 'load') { loadGame(id); deleteRecord(id); } else if (action === 'delete') { deleteRecord(id); } } });
   exportBtn.addEventListener('click', () => { playSound(soundClick); exportSaves(); });
   importInput.addEventListener('change', (e) => { playSound(soundClick); importSaves(e); });
-  
-  // 新增：为图鉴窗口的按钮和背景绑定事件
   showItemsBtn.addEventListener('click', openItemsModal);
   closeItemsBtn.addEventListener('click', closeItemsModal);
-  itemListModal.addEventListener('click', (e) => {
-    // 如果点击的是背景遮罩本身，则关闭窗口
-    if (e.target === itemListModal) {
-      closeItemsModal();
-    }
-  });
+  itemListModal.addEventListener('click', (e) => { if (e.target === itemListModal) { closeItemsModal(); } });
 
   document.addEventListener('DOMContentLoaded', () => {
     const savedMode = localStorage.getItem(MODE_LS_KEY) || 'low';
